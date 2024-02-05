@@ -21,14 +21,14 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.registerForm;
   }
 
   onSubmit() {
-    console.log(this.registerForm.value);
+    console.log(this.registerForm.getRawValue());
   }
 
 }
