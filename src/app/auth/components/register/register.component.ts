@@ -1,7 +1,10 @@
-import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { RouterModule } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { AuthActions } from 'src/app/store/actions/auth.actions';
+import { RegisterRequestInterface } from 'src/app/shared/types/register-request.inteface';
 
 @Component({
   selector: 'mc-register',
@@ -20,7 +23,8 @@ export class RegisterComponent implements OnInit {
   });
 
   constructor(
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private store: Store
   ) { }
 
   ngOnInit(): void {
@@ -28,7 +32,14 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.registerForm.getRawValue());
+    if (this.registerForm.valid) {
+      const { email, username, password } = this.registerForm.getRawValue();
+      const request: RegisterRequestInterface = {
+        user: { username, email, password }
+      };
+
+      this.store.dispatch(AuthActions.register({ request }));
+    }
   }
 
 }
