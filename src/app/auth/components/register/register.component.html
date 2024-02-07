@@ -1,3 +1,4 @@
+@if (data$ | async; as data) {
 <div class="auth-page">
   <div class="container page">
     <div class="row">
@@ -6,24 +7,42 @@
         <p class="text=xs-center">
           <a [routerLink]="['/auth/login']">Have an account?</a>
         </p>
-        <!-- TODO: backend errors -->
+        <mc-backend-error-messages [backendErrors]="data.backendErrors"></mc-backend-error-messages>
         <form [formGroup]="registerForm" (submit)="onSubmit()">
-          <!-- TODO: validation messages -->
           <fieldset class="form-group">
             <input type="text" class="form-control form-control-lg" placeholder="Username" formControlName="username">
+            @if (registerForm.get('username')?.hasError('required') && registerForm.touched) {
+            <div class="error-message">This field is required</div>
+            }
           </fieldset>
           <fieldset class="form-group">
             <input type="email" class="form-control form-control-lg" placeholder="Email" formControlName="email">
+            @if (registerForm.get('email')?.hasError('required') && registerForm.touched) {
+            <div class="error-message">This field is required</div>
+            }
           </fieldset>
           <fieldset class="form-group">
-            <input type="password" class="form-control form-control-lg" placeholder="Password" formControlName="password">
+            <input type="password" class="form-control form-control-lg" placeholder="Password"
+              formControlName="password">
+            @if (registerForm.get('password')?.hasError('required') && registerForm.touched) {
+            <div class="error-message">This field is required</div>
+            }
           </fieldset>
           <fieldset class="form-group">
-            <input type="password" class="form-control form-control-lg" placeholder="Repeat password" formControlName="repeatPassword">
+            <input type="password" class="form-control form-control-lg" placeholder="Repeat password"
+              formControlName="repeatPassword">
+            @if (registerForm.get('repeatPassword')?.hasError('required') && registerForm.touched) {
+            <div class="error-message">This field is required</div>
+            }
+            @if (registerForm.get('repeatPassword')?.getError('passwordMismatch')) {
+            <div class="error-message">Passwords do not match.</div>
+            }
           </fieldset>
-          <button type="submit" class="btn btn-large btn-primary pull-xs-right">Sign Up</button>
+          <button [disabled]="data.isSubmitting" type="submit" class="btn btn-large btn-primary pull-xs-right">Sign
+            Up</button>
         </form>
       </div>
     </div>
   </div>
 </div>
+}
