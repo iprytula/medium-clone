@@ -7,7 +7,9 @@
         <p class="text=xs-center">
           <a [routerLink]="['/auth/login']">Have an account?</a>
         </p>
+        @if (data.backendErrors) {
         <mc-backend-error-messages [backendErrors]="data.backendErrors"></mc-backend-error-messages>
+        }
         <form [formGroup]="registerForm" (submit)="onSubmit()">
           <fieldset class="form-group">
             <input type="text" class="form-control form-control-lg" placeholder="Username" formControlName="username">
@@ -19,6 +21,9 @@
             <input type="email" class="form-control form-control-lg" placeholder="Email" formControlName="email">
             @if (registerForm.get('email')?.hasError('required') && registerForm.touched) {
             <div class="error-message">This field is required</div>
+            }
+            @if (registerForm.get('email')?.hasError('email') && registerForm.touched) {
+            <div class="error-message">Email should be valid</div>
             }
           </fieldset>
           <fieldset class="form-group">

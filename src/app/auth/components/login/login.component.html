@@ -1,1 +1,37 @@
-<p>login works!</p>
+@if (data$ | async; as data) {
+<div class="auth-page">
+  <div class="container page">
+    <div class="row">
+      <div class="col-md-6 offset-md-3 col-xs-12">
+        <h1 class="text-xs-center">Sign Up</h1>
+        <p class="text=xs-center">
+          <a [routerLink]="['/auth/login']">Have an account?</a>
+        </p>
+        @if (data.backendErrors) {
+        <mc-backend-error-messages [backendErrors]="data.backendErrors"></mc-backend-error-messages>
+        }
+        <form [formGroup]="loginForm" (submit)="onSubmit()">
+          <fieldset class="form-group">
+            <input type="email" class="form-control form-control-lg" placeholder="Email" formControlName="email">
+            @if (loginForm.get('email')?.hasError('required') && loginForm.touched) {
+            <div class="error-message">This field is required</div>
+            }
+            @if (loginForm.get('email')?.hasError('email') && loginForm.touched) {
+              <div class="error-message">Email should be valid</div>
+              }
+          </fieldset>
+          <fieldset class="form-group">
+            <input type="password" class="form-control form-control-lg" placeholder="Password"
+              formControlName="password">
+            @if (loginForm.get('password')?.hasError('required') && loginForm.touched) {
+            <div class="error-message">This field is required</div>
+            }
+          </fieldset>
+          <button [disabled]="data.isSubmitting" type="submit" class="btn btn-large btn-primary pull-xs-right">Sign
+            Up</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+}

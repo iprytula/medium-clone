@@ -5,15 +5,13 @@ import { LoginComponent } from "./components/login/login.component";
 export const authRoutes: Route[] = [
   {
     path: '',
-    redirectTo: 'register',
-    pathMatch: 'full'
-  },
-  {
-    path: 'register',
     component: RegisterComponent
-  },
+  }
+];
+
+export const loginRoutes: Route[] = [
   {
-    path: 'login',
+    path: '',
     component: LoginComponent
   }
-]
+];

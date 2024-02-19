@@ -3,11 +3,11 @@ import { Component } from '@angular/core';
 import { AbstractControl, FormBuilder, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { RegisterRequestInterface } from 'src/app/auth/types/register-request.inteface';
+import { combineLatest } from 'rxjs';
+import { RegisterRequestInterface } from 'src/app/auth/types/register-request.interface';
+import { BackendErrorMessagesComponent } from 'src/app/shared/components/backend-error-messages/backend-error-messages.component';
 import { authActions } from 'src/app/store/actions/auth.actions';
 import { selectErrors, selectIsSubmitting } from 'src/app/store/reducers/auth.reducer';
-import { combineLatest } from 'rxjs';
-import { BackendErrorMessagesComponent } from 'src/app/shared/components/backend-error-messages/backend-error-messages.component';
 
 @Component({
   selector: 'mc-register',

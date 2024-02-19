@@ -2,6 +2,7 @@ import { createFeature, createReducer, on } from "@ngrx/store";
 import { BackendErrorsInterface } from "src/app/shared/types/backend-errors.interface";
 import { CurrentUserInterface } from "src/app/shared/types/current-user.interface";
 import { authActions } from "../actions/auth.actions";
+import { routerNavigatedAction } from "@ngrx/router-store";
 
 export interface AuthStateInterface {
   isSubmitting: boolean
@@ -30,7 +31,20 @@ const authFeature = createFeature({
       ...state,
       errors,
       isSubmitting: false
-    }))
+    })),
+    on(authActions.login, state => ({ ...state, isSubmitting: true })),
+    on(authActions.loginSuccess, (state, { currentUser }) => ({
+      ...state,
+      isSubmitting: false,
+      errors: null,
+      currentUser
+    })),
+    on(authActions.loginFailure, (state, { errors }) => ({
+      ...state,
+      errors,
+      isSubmitting: false
+    })),
+    on(routerNavigatedAction, (state) => ({ ...state, errors: null }))
   )
 });
 
