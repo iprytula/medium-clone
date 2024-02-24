@@ -4,10 +4,11 @@ import { appRoutes } from './app.routes';
 import { provideState, provideStore } from '@ngrx/store';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { authFeatureKey, authReducer } from 'src/app/store/reducers/auth.reducer';
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { provideEffects } from '@ngrx/effects';
 import * as authEffects from 'src/app/store/effects/auth.effects';
 import { provideRouterStore, routerReducer } from '@ngrx/router-store';
+import { authInterceptor } from './shared/services/auth.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -17,7 +18,7 @@ export const appConfig: ApplicationConfig = {
     }),
     provideState(authFeatureKey, authReducer),
     provideEffects(authEffects),
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([authInterceptor])),
     provideRouterStore(),
     provideStoreDevtools({
       maxAge: 25,

@@ -6,12 +6,14 @@ import { routerNavigatedAction } from "@ngrx/router-store";
 
 export interface AuthStateInterface {
   isSubmitting: boolean
-  errors: BackendErrorsInterface | null,
+  isLoading: boolean
+  errors: BackendErrorsInterface | null
   currentUser: CurrentUserInterface | null
 }
 
 const initialState: AuthStateInterface = {
   isSubmitting: false,
+  isLoading: false,
   errors: null,
   currentUser: null
 }
@@ -24,7 +26,6 @@ const authFeature = createFeature({
     on(authActions.registerSuccess, (state, { currentUser }) => ({
       ...state,
       isSubmitting: false,
-      errors: null,
       currentUser
     })),
     on(authActions.registerFailure, (state, { errors }) => ({
@@ -36,13 +37,23 @@ const authFeature = createFeature({
     on(authActions.loginSuccess, (state, { currentUser }) => ({
       ...state,
       isSubmitting: false,
-      errors: null,
       currentUser
     })),
     on(authActions.loginFailure, (state, { errors }) => ({
       ...state,
       errors,
       isSubmitting: false
+    })),
+    on(authActions.getCurrentUser, state => ({ ...state, isLoading: true })),
+    on(authActions.getCurrentUserSuccess, (state, { currentUser }) => ({
+      ...state,
+      isLoading: false,
+      currentUser
+    })),
+    on(authActions.getCurrentUserFailure, (state) => ({
+      ...state,
+      isLoading: false,
+      currentUser: null
     })),
     on(routerNavigatedAction, (state) => ({ ...state, errors: null }))
   )

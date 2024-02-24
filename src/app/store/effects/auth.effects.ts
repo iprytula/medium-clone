@@ -8,7 +8,7 @@ import { HttpErrorResponse } from "@angular/common/http";
 import { PersistenceService } from "src/app/shared/services/persistence.service";
 import { Router } from "@angular/router";
 
-export const authEffect = createEffect((
+export const registerEffect = createEffect((
   actions$ = inject(Actions),
   authService = inject(AuthService),
   persistenceService = inject(PersistenceService)
@@ -24,6 +24,32 @@ export const authEffect = createEffect((
         catchError((errorResponse: HttpErrorResponse) => {
           return of(authActions.registerFailure({ errors: errorResponse.error.errors }));
         })
+      )
+    })
+  );
+}, { functional: true });
+
+export const getCurrentUserEffect = createEffect((
+  actions$ = inject(Actions),
+  authService = inject(AuthService),
+  persistenceService = inject(PersistenceService)
+) => {
+  return actions$.pipe(
+    ofType(authActions.getCurrentUser),
+    switchMap(() => {
+      const token = persistenceService.get('accessToken');
+
+      if (!token) {
+        return of(authActions.getCurrentUserFailure())
+      }
+
+      return authService.getCurrentUser().pipe(
+        map((currentUser: CurrentUserInterface) =>
+          authActions.getCurrentUserSuccess({ currentUser })
+        ),
+        catchError(() =>
+          of(authActions.getCurrentUserFailure())
+        )
       )
     })
   );

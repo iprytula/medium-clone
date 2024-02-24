@@ -7,7 +7,7 @@ import { combineLatest } from 'rxjs';
 import { BackendErrorMessagesComponent } from 'src/app/shared/components/backend-error-messages/backend-error-messages.component';
 import { authActions } from 'src/app/store/actions/auth.actions';
 import { selectErrors, selectIsSubmitting } from 'src/app/store/reducers/auth.reducer';
-import { LoginRequestInterface } from '../../types/login-request.interface';
+import { LoginRequestInterface } from '../../../shared/types/login-request.interface';
 
 @Component({
   selector: 'mc-login',

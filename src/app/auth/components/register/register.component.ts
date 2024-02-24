@@ -4,7 +4,7 @@ import { AbstractControl, FormBuilder, ReactiveFormsModule, ValidationErrors, Va
 import { RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { combineLatest } from 'rxjs';
-import { RegisterRequestInterface } from 'src/app/auth/types/register-request.interface';
+import { RegisterRequestInterface } from 'src/app/shared/types/register-request.interface';
 import { BackendErrorMessagesComponent } from 'src/app/shared/components/backend-error-messages/backend-error-messages.component';
 import { authActions } from 'src/app/store/actions/auth.actions';
 import { selectErrors, selectIsSubmitting } from 'src/app/store/reducers/auth.reducer';
