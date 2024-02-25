@@ -64,5 +64,6 @@ export const {
   reducer: authReducer,
   selectIsSubmitting,
   selectCurrentUser,
-  selectErrors
+  selectErrors,
+  selectIsLoading
 } = authFeature;
