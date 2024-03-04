@@ -1,11 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UtilsService } from '../../services/utils.service';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'mc-pagination',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './pagination.component.html',
   styleUrl: './pagination.component.scss',
 })
@@ -23,6 +24,5 @@ export class PaginationComponent implements OnInit {
   ngOnInit(): void {
     this.pagesCount = Math.ceil(this.total / this.limit);
     this.pages = this.pagesCount > 0 ? this.utilsService.range(1, this.pagesCount) : [];
-    console.log(this.pagesCount);
   }
 }
