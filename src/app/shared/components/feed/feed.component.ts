@@ -10,11 +10,12 @@ import { ErrorMessageComponent } from '../error-message/error-message.component'
 import { LoadingComponent } from '../loading/loading.component';
 import { PaginationComponent } from '../pagination/pagination.component';
 import queryString from 'query-string';
+import { TaglistComponent } from '../taglist/taglist.component';
 
 @Component({
   selector: 'mc-feed',
   standalone: true,
-  imports: [CommonModule, RouterModule, ErrorMessageComponent, LoadingComponent, PaginationComponent],
+  imports: [CommonModule, RouterModule, ErrorMessageComponent, LoadingComponent, PaginationComponent, TaglistComponent],
   templateUrl: './feed.component.html',
   styleUrl: './feed.component.scss',
 })

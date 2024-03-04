@@ -26,7 +26,7 @@
           <h2>{{ article.title }}</h2>
           <p>{{ article.description }}</p>
           <span>Read more...</span>
-          <!-- TODO: TAG LIST -->
+          <mc-taglist [tags]="article.tagList"></mc-taglist>
         </a>
       </article>
     }
