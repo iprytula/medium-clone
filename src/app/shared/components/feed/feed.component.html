@@ -29,7 +29,12 @@
           <!-- TODO: TAG LIST -->
         </a>
       </article>
-      <!-- TODO: PAGINATION -->
     }
+    <mc-pagination
+      [total]="data.feed.articlesCount"
+      [limit]="paginationLimit"
+      [url]="baseUrl"
+      [currentPage]="currentPage"
+    ></mc-pagination>
   }
 }
