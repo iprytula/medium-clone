@@ -11,7 +11,7 @@ import { LoginRequestInterface } from 'src/app/shared/types/login-request.interf
   providedIn: 'root'
 })
 export class AuthService {
-  baseUrl = environment.apiUrl + '/api';
+  baseUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
 

@@ -8,7 +8,7 @@ import { GetFeedResponseInterface } from "../../shared/types/get-feed-response.i
   providedIn: 'root'
 })
 export class FeedService {
-  baseUrl = environment.apiUrl + '/api';
+  baseUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
 
