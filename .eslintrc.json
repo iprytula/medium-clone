@@ -24,7 +24,7 @@
           "error",
           {
             "type": "attribute",
-            "prefix": "mediumClone",
+            "prefix": "mc",
             "style": "camelCase"
           }
         ],
@@ -32,7 +32,7 @@
           "error",
           {
             "type": "element",
-            "prefix": "medium-clone",
+            "prefix": "mc",
             "style": "kebab-case"
           }
         ]
