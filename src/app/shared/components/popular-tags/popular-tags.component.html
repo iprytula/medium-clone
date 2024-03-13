@@ -1,11 +1,7 @@
 @if (data$ | async; as data) {
   @if (data.isLoading) {
     <mc-loading></mc-loading>
-  }
-  @if (data.error) {
-    <mc-error-message [message]="data.error"></mc-error-message>
-  }
-  @if (data.popularTags) {
+  } @else if (data.popularTags) {
     <div class="sidebar">
       <p>Popular Tags</p>
       <div class="tag-list">
@@ -17,5 +13,8 @@
         }
       </div>
     </div>
+  }
+  @if (data.error) {
+    <mc-error-message [message]="data.error"></mc-error-message>
   }
 }

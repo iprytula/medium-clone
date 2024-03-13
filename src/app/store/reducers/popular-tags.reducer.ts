@@ -22,7 +22,7 @@ const popularTagsFeature = createFeature({
     on(popularTagsActions.getPopularTags, state => ({ ...state, isLoading: true })),
     on(popularTagsActions.getPopularTagsSuccess, (state, { tags }) => ({ ...state, popularTags: tags, isLoading: false })),
     on(popularTagsActions.getPopularTagsFailure, state => ({ ...state, isLoading: false })),
-    on(routerNavigationAction, () => initialState)
+    on(routerNavigationAction, state => ({ ...state, error: null, isLoading: false }))
   )
 });
 
