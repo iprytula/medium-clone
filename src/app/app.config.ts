@@ -13,7 +13,6 @@ import { appRoutes } from './app.routes';
 import { authInterceptor } from './shared/services/auth.interceptor';
 import { feedFeatureKey, feedReducer } from './store/reducers/feed.reducer';
 import { popularTagsFeatureKey, popularTagsReducer } from './store/reducers/popular-tags.reducer';
-
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(appRoutes),
