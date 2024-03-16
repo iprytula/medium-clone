@@ -33,7 +33,7 @@
           <div class="row article-content">
             <div class="col-xs-12">
               <div>
-                <p>{{ data.article.body }}</p>
+                <p [innerHTML]="replaceNewlineToBrTags(data.article.body)"></p>
               </div>
               <mc-taglist [tags]="data.article.tagList"></mc-taglist>
             </div>

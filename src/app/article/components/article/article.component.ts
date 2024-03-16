@@ -51,4 +51,8 @@ export class ArticleComponent implements OnInit {
   onDelete() {
     this.store.dispatch(articleActions.deleteArticle({ slug: this.slug }));
   }
+
+  replaceNewlineToBrTags(text: string): string {
+    return text.replace(/\\n/g, '<br>');
+  }
 }
