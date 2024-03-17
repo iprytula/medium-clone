@@ -7,7 +7,7 @@ import { ErrorMessageComponent } from 'src/app/shared/components/error-message/e
 import { LoadingComponent } from 'src/app/shared/components/loading/loading.component';
 import { TaglistComponent } from 'src/app/shared/components/taglist/taglist.component';
 import { articleActions } from 'src/app/store/actions/article.actions';
-import { selectArticleData, selectError, selectIsLoading } from 'src/app/store/reducers/article.reducer';
+import { selectArticleData, selectErrors, selectIsLoading } from 'src/app/store/reducers/article.reducer';
 import { selectCurrentUser } from 'src/app/store/reducers/auth.reducer';
 
 @Component({
@@ -32,7 +32,7 @@ export class ArticleComponent implements OnInit {
 
   data$ = combineLatest({
     article: this.store.select(selectArticleData),
-    error: this.store.select(selectError),
+    errors: this.store.select(selectErrors),
     isLoading: this.store.select(selectIsLoading),
     isAuthor: this.isAuthor$
   });

@@ -1,10 +1,16 @@
-<div class="editor-page">
-  <mc-banner></mc-banner>
-  <div class="container page">
-    <div class="row">
-      <div class="col-md-10 offset-md-1 col-xs-12">
-        <mc-article-form (articleSubmit)="onSubmit($event)"></mc-article-form>
+@if (data$ | async; as data) {
+  <div class="editor-page">
+    <mc-banner title="New Article" description="Create your new article below"></mc-banner>
+    <div class="container page">
+      <div class="row">
+        <div class="col-md-10 offset-md-1 col-xs-12">
+          <mc-article-form
+            [errors]="data.backendErrors"
+            [isSubmitting]="data.isSubmitting"
+            (articleSubmit)="onSubmit($event)"
+          ></mc-article-form>
+        </div>
       </div>
     </div>
   </div>
-</div>
+}

@@ -25,6 +25,27 @@ export const getArticleEffect = createEffect((
   )
 }, { functional: true });
 
+export const createArticleEffect = createEffect((
+  actions$ = inject(Actions),
+  articleService = inject(ArticleService),
+  router = inject(Router)
+) => {
+  return actions$.pipe(
+    ofType(articleActions.createArticle),
+    switchMap(({ request }) => {
+      return articleService.createArticle(request).pipe(
+        map((article: ArticleInterface) => {
+          router.navigateByUrl('/');
+          return articleActions.createArticleSuccess({ article })
+        }
+        ),
+        catchError((error) => of(articleActions.createArticleFailure({ errors: error.error.errors }))
+        )
+      )
+    })
+  )
+}, { functional: true });
+
 export const deleteArticleEffect = createEffect((
   actions$ = inject(Actions),
   articleService = inject(ArticleService)

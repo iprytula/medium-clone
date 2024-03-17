@@ -45,8 +45,8 @@
       } @placeholder (minimum 1500ms) {
         <mc-loading></mc-loading>
       }
-      @if (data.error) {
-        <mc-error-message [message]="data.error"></mc-error-message>
+      @if (data.errors) {
+        <mc-error-message [message]="data.errors"></mc-error-message>
       }
     </div>
   </div>
