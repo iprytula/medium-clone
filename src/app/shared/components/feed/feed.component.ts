@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, Params, Router, RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { combineLatest } from 'rxjs';
@@ -19,7 +19,7 @@ import { TaglistComponent } from '../taglist/taglist.component';
   templateUrl: './feed.component.html',
   styleUrl: './feed.component.scss',
 })
-export class FeedComponent implements OnInit {
+export class FeedComponent implements OnInit, OnChanges {
   @Input() apiUrl: string = '';
   paginationLimit = environment.limit;
   baseUrl = this.router.url.split('?')[0];
@@ -44,6 +44,12 @@ export class FeedComponent implements OnInit {
       this.currentPage = Number(params['page']) || 1;
       this.fetchFeed();
     });
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    const isApiUrlChanged = !changes['apiUrl'].firstChange && changes['apiUrl'].currentValue !== changes['apiUrl'].previousValue;
+
+    if (isApiUrlChanged) this.fetchFeed();
   }
 
   fetchFeed(): void {

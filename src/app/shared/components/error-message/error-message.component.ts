@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { BackendErrorsInterface } from '../../types/backend-errors.interface';
 
 @Component({
   selector: 'mc-error-message',
@@ -9,5 +10,5 @@ import { CommonModule } from '@angular/common';
   styles: ``,
 })
 export class ErrorMessageComponent {
-  @Input() message: string = 'Something went wrong';
+  @Input() message: BackendErrorsInterface | string | null = null;
 }

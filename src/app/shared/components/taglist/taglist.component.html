@@ -1,7 +1,8 @@
 <ul class="tag-list">
   @for (tag of tags; track $index) {
-    <li class="tag-default tag-pill tag-outline">
-      {{ tag }}
-    </li>
+    <a
+      [routerLink]="['/tags', tag]"
+      class="tag-default tag-pill"
+    >{{ tag }}</a>
   }
 </ul>

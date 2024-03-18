@@ -1,0 +1,46 @@
+@if (errors) {
+  <mc-backend-error-messages [backendErrors]="errors"></mc-backend-error-messages>
+}
+<form [formGroup]="form" (submit)="onSubmit()">
+  <fieldset>
+    <fieldset class="form-group">
+      <input
+        type="text"
+        class="form-control form-control-lg"
+        placeholder="Article title"
+        formControlName="title"
+      >
+    </fieldset>
+    <fieldset class="form-group">
+      <input
+        type="text"
+        class="form-control form-control-lg"
+        placeholder="What is this article about"
+        formControlName="description"
+      >
+    </fieldset>
+    <fieldset class="form-group">
+      <textarea
+        class="form-control form-control-lg"
+        placeholder="Write your article"
+        formControlName="body"
+        rows="8"
+      ></textarea>
+    </fieldset>
+    <fieldset class="form-group">
+      <input
+        type="text"
+        class="form-control form-control-lg"
+        placeholder="Enter tags (separated with space)"
+        formControlName="tagList"
+      >
+    </fieldset>
+    <fieldset>
+      <button
+        type="submit"
+        class="btn btn-lg pull-xs-right btn-primary"
+        [disabled]="isSubmitting"
+      >Publish article</button>
+    </fieldset>
+  </fieldset>
+</form>
