@@ -14,6 +14,9 @@ export const articleActions = createActionGroup({
     deleteArticleFailure: emptyProps(),
     createArticle: props<{ request: ArticleRequestInterface }>(),
     createArticleSuccess: props<{ article: ArticleInterface }>(),
-    createArticleFailure: props<{ errors: BackendErrorsInterface }>()
+    createArticleFailure: props<{ errors: BackendErrorsInterface }>(),
+    updateArticle: props<{ slug: string, request: ArticleRequestInterface }>(),
+    updateArticleSuccess: props<{ article: ArticleInterface }>(),
+    updateArticleFailure: props<{ errors: BackendErrorsInterface }>(),
   }
 });

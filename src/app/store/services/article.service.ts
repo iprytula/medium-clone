@@ -29,4 +29,11 @@ export class ArticleService {
       map(response => response.article)
     )
   }
+
+  updateArticle(slug: string, articleRequest: ArticleRequestInterface): Observable<ArticleInterface> {
+    return this.http.put<ArticleResponseInterface>(`${this.baseUrl}/articles/${slug}`, articleRequest).pipe(
+      map(({ article }) => article)
+    )
+  }
+
 }

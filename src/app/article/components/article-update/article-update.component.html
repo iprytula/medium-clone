@@ -1,10 +1,16 @@
-<div class="editor-page">
-  <mc-banner></mc-banner>
-  <div class="container page">
-    <div class="row">
-      <div class="col-md-10 offset-md-1 col-xs-12">
-        <mc-article-form></mc-article-form>
-      </div>
+@if (data$ | async; as data) {
+  <div class="editor-page">
+    <mc-banner title="Edit article" description="Edit Article using below form"></mc-banner>
+    <div class="container page">
+      @if (data.isLoading) {
+        <mc-loading></mc-loading>
+      } @else {
+        <div class="row">
+          <div class="col-md-10 offset-md-1 col-xs-12">
+            <mc-article-form [initialValues]="data.initialValues" (articleSubmit)="onSubmit($event)"></mc-article-form>
+          </div>
+        </div>
+      }
     </div>
   </div>
-</div>
+}

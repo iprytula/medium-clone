@@ -52,6 +52,32 @@ export const createArticleSuccessEffect = createEffect((
   )
 }, { dispatch: false, functional: true });
 
+export const updateArticleEffect = createEffect((
+  actions$ = inject(Actions),
+  articleService = inject(ArticleService),
+) => {
+  return actions$.pipe(
+    ofType(articleActions.updateArticle),
+    switchMap(({ slug, request }) => {
+      return articleService.updateArticle(slug, request).pipe(
+        map((article: ArticleInterface) => articleActions.updateArticleSuccess({ article })),
+        catchError((error) => of(articleActions.updateArticleFailure({ errors: error.error.errors }))
+        )
+      )
+    })
+  )
+}, { functional: true });
+
+export const updateArticleSuccessEffect = createEffect((
+  actions$ = inject(Actions),
+  router = inject(Router)
+) => {
+  return actions$.pipe(
+    ofType(articleActions.updateArticleSuccess),
+    tap(({ article }) => router.navigate(['/articles', article.slug]))
+  )
+}, { dispatch: false, functional: true });
+
 export const deleteArticleEffect = createEffect((
   actions$ = inject(Actions),
   articleService = inject(ArticleService)

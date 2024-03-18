@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params, RouterModule } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { combineLatest, map } from 'rxjs';
+import { Subject, combineLatest, map, takeUntil } from 'rxjs';
 import { ErrorMessageComponent } from 'src/app/shared/components/error-message/error-message.component';
 import { LoadingComponent } from 'src/app/shared/components/loading/loading.component';
 import { TaglistComponent } from 'src/app/shared/components/taglist/taglist.component';
@@ -17,7 +17,7 @@ import { selectCurrentUser } from 'src/app/store/reducers/auth.reducer';
   templateUrl: './article.component.html',
   styleUrl: './article.component.scss',
 })
-export class ArticleComponent implements OnInit {
+export class ArticleComponent implements OnInit, OnDestroy {
 
   isAuthor$ = combineLatest({
     currentUser: this.store.select(selectCurrentUser),
@@ -37,15 +37,20 @@ export class ArticleComponent implements OnInit {
     isAuthor: this.isAuthor$
   });
 
-  slug: string = '';
+  slug: string = this.route.snapshot.paramMap.get('slug') ?? '';
+
+  componentDestroyed$: Subject<boolean> = new Subject();
 
   constructor(private store: Store, private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-    this.route.params.subscribe((params: Params) => {
-      this.slug = params['slug'];
-      this.store.dispatch(articleActions.getArticle({ slug: this.slug }));
-    });
+    if (this.slug) {
+      this.data$.pipe(takeUntil(this.componentDestroyed$)).subscribe(({ article }) => {
+        if (!article || article.slug !== this.slug) {
+          this.store.dispatch(articleActions.getArticle({ slug: this.slug }));
+        }
+      });
+    }
   }
 
   onDelete() {
@@ -54,5 +59,10 @@ export class ArticleComponent implements OnInit {
 
   replaceNewlineToBrTags(text: string): string {
     return text.replace(/\\n/g, '<br>');
+  }
+
+  ngOnDestroy(): void {
+    this.componentDestroyed$.next(true);
+    this.componentDestroyed$.complete();
   }
 }
