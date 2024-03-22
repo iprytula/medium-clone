@@ -28,16 +28,12 @@ export const getArticleEffect = createEffect((
 export const createArticleEffect = createEffect((
   actions$ = inject(Actions),
   articleService = inject(ArticleService),
-  router = inject(Router)
 ) => {
   return actions$.pipe(
     ofType(articleActions.createArticle),
     switchMap(({ request }) => {
       return articleService.createArticle(request).pipe(
-        map((article: ArticleInterface) => {
-          router.navigateByUrl('/');
-          return articleActions.createArticleSuccess({ article })
-        }
+        map((article: ArticleInterface) => articleActions.createArticleSuccess({ article })
         ),
         catchError((error) => of(articleActions.createArticleFailure({ errors: error.error.errors }))
         )
@@ -46,12 +42,48 @@ export const createArticleEffect = createEffect((
   )
 }, { functional: true });
 
+export const createArticleSuccessEffect = createEffect((
+  actions$ = inject(Actions),
+  router = inject(Router)
+) => {
+  return actions$.pipe(
+    ofType(articleActions.createArticleSuccess),
+    tap(({ article }) => router.navigate(['/articles', article.slug]))
+  )
+}, { dispatch: false, functional: true });
+
+export const updateArticleEffect = createEffect((
+  actions$ = inject(Actions),
+  articleService = inject(ArticleService),
+) => {
+  return actions$.pipe(
+    ofType(articleActions.updateArticle),
+    switchMap(({ slug, request }) => {
+      return articleService.updateArticle(slug, request).pipe(
+        map((article: ArticleInterface) => articleActions.updateArticleSuccess({ article })),
+        catchError((error) => of(articleActions.updateArticleFailure({ errors: error.error.errors }))
+        )
+      )
+    })
+  )
+}, { functional: true });
+
+export const updateArticleSuccessEffect = createEffect((
+  actions$ = inject(Actions),
+  router = inject(Router)
+) => {
+  return actions$.pipe(
+    ofType(articleActions.updateArticleSuccess),
+    tap(({ article }) => router.navigate(['/articles', article.slug]))
+  )
+}, { dispatch: false, functional: true });
+
 export const deleteArticleEffect = createEffect((
   actions$ = inject(Actions),
   articleService = inject(ArticleService)
 ) => {
   return actions$.pipe(
-    ofType(articleActions.getArticle),
+    ofType(articleActions.deleteArticle),
     switchMap(({ slug }) => {
       return articleService.deleteArticle(slug).pipe(
         map(() =>

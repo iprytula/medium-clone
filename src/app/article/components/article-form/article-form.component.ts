@@ -13,7 +13,7 @@ import { BackendErrorsInterface } from 'src/app/shared/types/backend-errors.inte
   styleUrl: './article-form.component.scss',
 })
 export class ArticleFormComponent implements OnInit {
-  @Input() initialValues?: ArticleFormValuesInterface;
+  @Input() initialValues?: ArticleFormValuesInterface | null;
   @Input() isSubmitting = false;
   @Input() errors: BackendErrorsInterface | null = null;
 
